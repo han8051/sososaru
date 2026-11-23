@@ -1,6 +1,6 @@
 {
-  "name": "소소하루",
-  "short_name": "소소하루",
+  "name": "나의하루",
+  "short_name": "나의하루",
   "description": "나만의 작은 하루 할 일",
   "lang": "ko",
   "start_url": "./",

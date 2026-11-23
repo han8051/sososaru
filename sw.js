@@ -1,5 +1,5 @@
 // 소소하루 서비스워커: 인터넷이 될 때는 늘 최신 파일, 안 될 때는 저장해 둔 파일로 열림
-const CACHE = 'sososaru-v1';
+const CACHE = 'sososaru-v2';
 const ASSETS = [
   './',
   './index.html',

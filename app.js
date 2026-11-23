@@ -301,7 +301,7 @@ async function exportBackup() {
 
   try {
     if (navigator.canShare && navigator.canShare({ files: [file] })) {
-      await navigator.share({ files: [file], title: '소소하루 백업' });
+      await navigator.share({ files: [file], title: '나의하루 백업' });
     } else {
       const url = URL.createObjectURL(file);
       const a = document.createElement('a');

@@ -1,4 +1,4 @@
-// storage.js — 소소하루 저장소
+// storage.js — 나의하루 저장소
 // 지금은 localStorage를 쓴다. 나중에 Supabase로 바꿀 때는 이 파일만 고치면 된다.
 // 모든 함수는 async라서, Supabase처럼 네트워크를 쓰는 저장소로 바꿔도 app.js는 그대로 둘 수 있다.
 //
@@ -80,7 +80,7 @@ export async function exportData() {
 // 백업 파일 내용으로 지금 데이터를 통째로 바꾼다. 불러온 개수를 돌려준다.
 export async function importData(data) {
   const todos = Array.isArray(data) ? data : data && data.todos;
-  if (!Array.isArray(todos)) throw new Error('소소하루 백업 파일이 아니에요.');
+  if (!Array.isArray(todos)) throw new Error('나의하루 백업 파일이 아니에요.');
   const clean = todos
     .filter(t => t && typeof t.text === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(t.date))
     .map(t => ({
