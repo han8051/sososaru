@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f2f2f2">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="소소하루">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon-192.png">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <link rel="stylesheet" href="style.css">
+  <title>소소하루</title>
+</head>
+<body>
+  <div class="app">
+    <header class="top">
+      <h1>소소하루</h1>
+      <button id="settingsBtn" class="icon-btn" type="button" aria-label="설정">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      </button>
+    </header>
+
+    <nav class="tabs">
+      <button class="tab active" type="button" data-tab="day">하루</button>
+      <button class="tab" type="button" data-tab="search">검색</button>
+    </nav>
+
+    <!-- 하루 탭 -->
+    <section id="dayView" class="card">
+      <h2 id="dayTitle" class="day-title"></h2>
+      <ul id="todoList" class="todo-list"></ul>
+      <p id="emptyMsg" class="empty" hidden>할 일이 없어요</p>
+
+      <div class="divider"></div>
+
+      <form id="todoForm" autocomplete="off">
+        <p id="editNotice" class="edit-notice" hidden>할 일 수정 중</p>
+        <input id="todoText" class="field" type="text" placeholder="할 일을 입력하세요" maxlength="200" enterkeyhint="done">
+        <div id="colorPicker" class="colors" role="radiogroup" aria-label="색상"></div>
+        <div id="repeatRow" class="row">
+          <select id="repeatType" class="field select" aria-label="반복">
+            <option value="none">반복 안 함</option>
+            <option value="daily">매일</option>
+            <option value="weekly">매주</option>
+            <option value="monthly">매월</option>
+          </select>
+          <select id="repeatCount" class="field select" aria-label="반복 횟수" disabled></select>
+        </div>
+        <button id="saveBtn" class="btn primary" type="submit">저장</button>
+        <button id="cancelEditBtn" class="btn ghost" type="button" hidden>취소</button>
+      </form>
+
+      <div class="divider"></div>
+
+      <div class="row">
+        <button id="todayBtn" class="btn outline small" type="button">오늘</button>
+        <button id="tomorrowBtn" class="btn outline small" type="button">내일</button>
+      </div>
+      <label class="field date-field">
+        <span id="dateLabel"></span>
+        <input id="datePicker" type="date" aria-label="날짜 선택">
+      </label>
+    </section>
+
+    <!-- 검색 탭 -->
+    <section id="searchView" class="card" hidden>
+      <input id="searchInput" class="field" type="search" placeholder="할 일 내용으로 검색" enterkeyhint="search">
+      <p id="searchInfo" class="muted"></p>
+      <ul id="searchResults" class="todo-list"></ul>
+    </section>
+  </div>
+
+  <!-- 설정 -->
+  <div id="settingsSheet" class="overlay" hidden>
+    <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+      <div class="sheet-head">
+        <h3 id="settingsTitle">설정</h3>
+        <button id="closeSettingsBtn" class="icon-btn" type="button" aria-label="닫기">✕</button>
+      </div>
+      <button id="exportBtn" class="btn primary" type="button">백업 내보내기 (JSON)</button>
+      <button id="importBtn" class="btn outline" type="button">백업에서 복원하기</button>
+      <input id="importFile" type="file" accept="application/json,.json" hidden>
+      <p id="backupInfo" class="muted"></p>
+      <p class="muted small-note">할 일은 이 기기의 브라우저에만 저장돼요. 사이트 데이터를 지우면 사라지니 가끔 백업해 두세요. 홈 화면 앱과 브라우저는 저장 공간이 따로일 수 있으니 한쪽으로만 쓰는 게 좋아요.</p>
+    </div>
+  </div>
+
+  <!-- 확인 / 알림 창 -->
+  <div id="dialog" class="overlay center" hidden>
+    <div class="dialog" role="alertdialog" aria-modal="true">
+      <p id="dialogMsg"></p>
+      <div id="dialogBtns" class="dialog-btns"></div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast" hidden></div>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
